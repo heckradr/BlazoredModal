@@ -79,6 +79,12 @@ public partial class BlazoredModalInstance : IDisposable
     public void SetTitle(string title)
     {
         Title = title;
+
+        if (FocusTrap is not null)
+        {
+            FocusTrap.SetRenderRequest();
+        }
+
         StateHasChanged();
     }
 

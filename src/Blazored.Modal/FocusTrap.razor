@@ -13,12 +13,21 @@
     private ElementReference _endFirst;
     private ElementReference _endSecond;
     private bool _shiftPressed;
+    private bool _renderRequest;
 
     [Parameter] public RenderFragment ChildContent { get; set; } = default!;
     [Parameter] public bool IsActive { get; set; }
 
     protected override bool ShouldRender()
-        => false;
+    {
+        if (_renderRequest)
+        {
+            _renderRequest = false;
+            return true;
+        }
+        
+        return false;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -54,4 +63,7 @@
             _shiftPressed = args.ShiftKey;
         }
     }
+
+    internal void SetRenderRequest()
+        => _renderRequest = true;
 }
